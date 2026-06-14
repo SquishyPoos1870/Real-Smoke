@@ -1,0 +1,74 @@
+[mod-name]
+real-smoke=Real Smoke
+
+[mod-description]
+real-smoke=Grounded industrial smoke effects for machines, vehicles, rockets, and explosions.
+
+[entity-name]
+real-smoke-light=Light real smoke
+real-smoke-industrial=Industrial real smoke
+real-smoke-soot=Soot real smoke
+real-smoke-heavy=Heavy real smoke
+real-smoke-exhaust=Exhaust real smoke
+real-smoke-blast=Blast real smoke
+
+[entity-description]
+real-smoke-light=Small dirty smoke puff used by burner machines.
+real-smoke-industrial=Medium industrial grey smoke that rises, expands, and fades.
+real-smoke-soot=Soft grey-black soot smoke used for boilers and dirtier exhaust without forming huge black clouds.
+real-smoke-heavy=Heavy dark smoke for dense exhaust and blast events.
+real-smoke-exhaust=Vehicle and locomotive exhaust smoke.
+real-smoke-blast=Short heavy smoke cloud for blasts and rocket events.
+
+[mod-setting-name]
+real-smoke-enabled=Enable Real Smoke
+real-smoke-density=Smoke density
+real-smoke-smoothness=Smoke smoothness
+real-smoke-black-strength=Black smoke strength
+real-smoke-scan-radius=Smoke scan radius
+real-smoke-machines=Machine smoke
+real-smoke-vehicles=Vehicle smoke
+real-smoke-events=Rocket and explosion smoke
+real-smoke-debug-stats=Debug smoke stats
+
+[mod-setting-description]
+real-smoke-enabled=Master switch for all Real Smoke effects.
+real-smoke-density=Controls how much smoke appears near each player.
+real-smoke-smoothness=Controls how often smaller smoke puffs are emitted. 120 FPS Style and Ultra Real are visual presets, not true 120 UPS simulations.
+real-smoke-black-strength=Controls how dark and strong soot smoke appears. Soft is best if black smoke still feels too heavy.
+real-smoke-scan-radius=How far around each connected player Real Smoke checks for active machines and vehicles. Lower values are better for UPS.
+real-smoke-machines=Adds smoke to working boilers, furnaces, and burner mining drills.
+real-smoke-vehicles=Adds exhaust smoke to moving locomotives, cars, and tanks.
+real-smoke-events=Adds short heavy smoke clouds to supported rocket and explosion events.
+real-smoke-debug-stats=Prints periodic smoke spawn counts for testing.
+
+[string-mod-setting]
+real-smoke-density-subtle=Subtle
+real-smoke-density-balanced=Balanced
+real-smoke-density-heavy=Heavy
+real-smoke-density-cinematic=Cinematic
+real-smoke-smoothness-performance=Performance
+real-smoke-smoothness-smooth=Smooth
+real-smoke-smoothness-120-style=120 FPS Style
+real-smoke-smoothness-ultra-real=Ultra Real
+real-smoke-black-strength-soft=Soft
+real-smoke-black-strength-realistic=Realistic
+real-smoke-black-strength-strong=Strong
+
+[string-mod-setting-description]
+real-smoke-density-subtle=Very light smoke, best for huge factories or weak servers.
+real-smoke-density-balanced=Recommended default. Visible but not messy.
+real-smoke-density-heavy=Thicker smoke for stronger industrial atmosphere.
+real-smoke-density-cinematic=Maximum smoke for screenshots and high-end PCs.
+real-smoke-smoothness-performance=Lowest runtime cost. Smoke emits less often.
+real-smoke-smoothness-smooth=Recommended. More natural smoke cadence without being too heavy.
+real-smoke-smoothness-120-style=Very smooth visual mode with smaller, more frequent puffs and softer trails. Uses more UPS than Smooth.
+real-smoke-smoothness-ultra-real=Smoothest visual preset. Uses lighter layered smoke and tighter jitter for a more realistic high-FPS look.
+real-smoke-black-strength-soft=Soft grey-black soot. Best if dark smoke still feels too heavy.
+real-smoke-black-strength-realistic=Recommended. Visible soot without huge black clouds.
+real-smoke-black-strength-strong=Stronger dark smoke for a dirty factory look.
+
+[real-smoke]
+debug=Real Smoke: __1__ puffs this cycle, __2__ total.
+command-help=Show Real Smoke runtime stats.
+command-stats=Real Smoke cycles: __1__. Total puffs spawned: __2__.
