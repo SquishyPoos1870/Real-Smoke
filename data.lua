@@ -1,4 +1,50 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.18
+Date: 2026-06-14
+  Features:
+    - Added optional Real Wind integration.
+    - Smoke now responds to Real Wind gust state as well as Real Rain storms.
+  Compatibility:
+    - Real Rain and Real Wind integrations are optional and safe to run separately.
+  License:
+    - Updated the package license to GNU GPLv3.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.17
+Date: 2026-06-15
+  Features:
+    - Added optional Real Rain integration while keeping Real Smoke as a separate standalone mod.
+    - When Real Rain is installed and raining, smoke now reacts to storm weather with stronger gust drift and slightly cleaner/thinner wet-weather smoke.
+    - Added a runtime setting to toggle Real Rain weather integration.
+  Compatibility:
+    - Added optional dependency support for Real Rain so load order is clean when both mods are installed.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.16
+Date: 2026-06-15
+  Changes:
+    - Version bump and refreshed mod description/documentation.
+    - No gameplay changes since 1.0.5. Still includes the idle-smoke fix (machines only smoke while actually working) and the rocket/explosion smoke fixes.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.5
+Date: 2026-06-15
+  Bugfixes:
+    - Fixed machines emitting smoke while idle. Boilers, furnaces, and burner mining drills now only smoke while their status is actually "working" (burning fuel), instead of any time the entity was active. An idle or unfed boiler no longer puffs smoke.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 2026-06-15
+  Bugfixes:
+    - Removed invalid smoke prototype keys (wind_speed_factor, vertical_speed_slowdown) that Factorio 2.0 silently ignored, so smoke now only uses supported fields.
+    - Removed a duplicate affected_by_wind assignment in the smoke builder.
+    - Fixed rocket and explosion smoke not appearing. Rocket launches now emit smoke through on_rocket_launched, and destructive entity deaths now emit blast smoke directly instead of relying on on_trigger_created_entity, which rarely fired for base entities.
+  Changes:
+    - Explosion and death smoke is near-player gated and scales with entity size to stay UPS-conscious.
+    - Enemy (unit) deaths emit smoke only occasionally so large battles do not flood the map with smoke.
+    - Added bonus trigger-created coverage for massive and nuke explosion entities.
+
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2026-06-15
   Features:

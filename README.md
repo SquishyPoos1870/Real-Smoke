@@ -51,3 +51,16 @@ Built for Factorio 2.0 and should work with Space Age saves because it only adds
 ## Author
 
 Squishy1870
+
+
+## Real Rain integration
+
+When Real Rain is installed, Real Smoke stays as a separate mod but reads the active weather state. Rain and storms make smoke drift harder in gusts and slightly thin the darkest smoke so wet weather feels cleaner and more believable. Disable **Real Rain weather integration** in runtime settings if you want Real Smoke to ignore rain.
+
+## Optional Weather/Wind Integration
+
+Real Smoke can read Real Rain and Real Wind when they are installed. Rain slightly thins heavy smoke, storms make smoke drift harder, and Real Wind gusts add more natural side movement. Each integration is optional.
+
+## License
+
+GNU General Public License v3.0. See `LICENSE` for the full license text.

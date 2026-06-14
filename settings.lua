@@ -7,6 +7,20 @@ data:extend({
     order = "a"
   },
   {
+    type = "bool-setting",
+    name = "real-smoke-real-rain-integration",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "aa"
+  },
+  {
+    type = "bool-setting",
+    name = "real-smoke-real-wind-integration",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "ab"
+  },
+  {
     type = "string-setting",
     name = "real-smoke-density",
     setting_type = "runtime-global",

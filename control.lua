@@ -22,6 +22,8 @@ real-smoke-blast=Short heavy smoke cloud for blasts and rocket events.
 
 [mod-setting-name]
 real-smoke-enabled=Enable Real Smoke
+real-smoke-real-rain-integration=Real Rain weather integration
+real-smoke-real-wind-integration=Real Wind gust integration
 real-smoke-density=Smoke density
 real-smoke-smoothness=Smoke smoothness
 real-smoke-black-strength=Black smoke strength
@@ -33,6 +35,8 @@ real-smoke-debug-stats=Debug smoke stats
 
 [mod-setting-description]
 real-smoke-enabled=Master switch for all Real Smoke effects.
+real-smoke-real-rain-integration=When Real Rain is installed, active rain and storms make smoke drift harder in gusts and slightly thin out under heavy rain.
+real-smoke-real-wind-integration=When Real Wind is installed, current wind speed and gusts add more side movement and trail variation to smoke.
 real-smoke-density=Controls how much smoke appears near each player.
 real-smoke-smoothness=Controls how often smaller smoke puffs are emitted. 120 FPS Style and Ultra Real are visual presets, not true 120 UPS simulations.
 real-smoke-black-strength=Controls how dark and strong soot smoke appears. Soft is best if black smoke still feels too heavy.
