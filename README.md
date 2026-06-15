@@ -1,3 +1,7 @@
+[![Factorio 2.0](https://img.shields.io/badge/Factorio-2.0%20Ready-orange?style=flat-square)](https://factorio.com/) [![Mod Version](https://img.shields.io/factorio-mod-portal/v/real-smoke?label=Version\&style=flat-square\&color=2ea44f)](https://mods.factorio.com/mod/real-smoke) [![Downloads](https://img.shields.io/factorio-mod-portal/dt/real-smoke?label=Downloads\&style=flat-square\&color=brightgreen)](https://mods.factorio.com/mod/real-smoke) [![GitHub](https://img.shields.io/badge/GitHub-Source%20Code-181717?style=flat-square\&logo=github)](https://github.com/SquishyPoos1870/Real-Smoke) [![Last Commit](https://img.shields.io/github/last-commit/SquishyPoos1870/Real-Smoke?label=Last%20Commit\&style=flat-square)](https://github.com/SquishyPoos1870/Real-Smoke) [![License GPLv3](https://img.shields.io/badge/License-GPLv3-blue?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0) [![Support](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-ffdd00?style=flat-square\&logo=buymeacoffee\&logoColor=black)](https://buymeacoffee.com/camgrieve11)
+
+![Real Smoke Main Banner](https://raw.githubusercontent.com/SquishyPoos1870/LOGO/main/Banner%20Real%20Smoke.png)
+
 # 💨 Real Smoke
 
 **Real Smoke** adds grounded, industrial smoke ambience to Factorio so your factory feels dirtier, heavier, and more alive.
