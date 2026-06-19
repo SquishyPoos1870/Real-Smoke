@@ -61,6 +61,7 @@ Real Smoke is built to be UPS-conscious:
 - It only scans for active machines and vehicles **near connected players**, within your configured scan radius.
 - Explosion/death smoke is also near-player gated, and enemy (unit) deaths only smoke occasionally, so a big biter wave will not flood the map with smoke.
 - Lower the **scan radius** and use **Performance** smoothness + **Subtle** density if you need to claw back UPS on a large save.
+- Optional Real Rain / Real Wind data is cached per surface/tick before smoke is adjusted, so weather integration stays lightweight on busy saves.
 
 ---
 
@@ -87,9 +88,9 @@ Built for **Factorio 2.0** and should work with **Space Age** saves — it only 
 Found a bug or have a tuning suggestion? Feedback is welcome — especially around how often explosion/death smoke fires, which is the main thing worth eyeballing in your own game.
 
 
-## Real Rain integration
+## Optional Real Rain / Real Wind integration
 
-When Real Rain is installed, Real Smoke stays as a separate mod but reads the active weather state. Rain and storms make smoke drift harder in gusts and slightly thin the darkest smoke so wet weather feels cleaner and more believable. Disable **Real Rain weather integration** in runtime settings if you want Real Smoke to ignore rain.
+Real Smoke stays fully standalone, but when **Real Rain** or **Real Wind** are installed it can read their active weather state. Rain and storms slightly thin the darkest smoke, while stronger wind and gusts add more side movement and exhaust-trail variation. Disable the integration settings at runtime if you want Real Smoke to ignore weather or wind.
 
 ---
 

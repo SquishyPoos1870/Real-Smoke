@@ -1,88 +1,96 @@
----------------------------------------------------------------------------------------------------
-Version: 1.0.18
-Date: 2026-06-14
-  Features:
-    - Added optional Real Wind integration.
-    - Smoke now responds to Real Wind gust state as well as Real Rain storms.
-  Compatibility:
-    - Real Rain and Real Wind integrations are optional and safe to run separately.
-  License:
-    - Updated the package license to GNU GPLv3.
+local base_smoke = data.raw["trivial-smoke"] and (data.raw["trivial-smoke"]["smoke"] or data.raw["trivial-smoke"]["smoke-fast"])
 
----------------------------------------------------------------------------------------------------
-Version: 1.0.17
-Date: 2026-06-15
-  Features:
-    - Added optional Real Rain integration while keeping Real Smoke as a separate standalone mod.
-    - When Real Rain is installed and raining, smoke now reacts to storm weather with stronger gust drift and slightly cleaner/thinner wet-weather smoke.
-    - Added a runtime setting to toggle Real Rain weather integration.
-  Compatibility:
-    - Added optional dependency support for Real Rain so load order is clean when both mods are installed.
+if base_smoke then
+  local function make_smoke(name, color, start_scale, end_scale, duration, fade_in, spread, fade_away, slowdown)
+    local smoke = table.deepcopy(base_smoke)
+    smoke.name = name
+    smoke.color = color
+    smoke.start_scale = start_scale
+    smoke.end_scale = end_scale
+    smoke.duration = duration
+    smoke.fade_in_duration = fade_in
+    smoke.spread_duration = spread
+    smoke.fade_away_duration = fade_away
+    smoke.movement_slow_down_factor = slowdown
+    smoke.affected_by_wind = true
+    smoke.show_when_smoke_off = true
+    smoke.render_layer = "smoke"
+    smoke.cyclic = true
+    if smoke.animation then
+      smoke.animation = table.deepcopy(smoke.animation)
+      smoke.animation.animation_speed = 0.32
+    end
+    smoke.localised_name = {"entity-name." .. name}
+    smoke.localised_description = {"entity-description." .. name}
+    return smoke
+  end
 
----------------------------------------------------------------------------------------------------
-Version: 1.0.16
-Date: 2026-06-15
-  Changes:
-    - Version bump and refreshed mod description/documentation.
-    - No gameplay changes since 1.0.5. Still includes the idle-smoke fix (machines only smoke while actually working) and the rocket/explosion smoke fixes.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.5
-Date: 2026-06-15
-  Bugfixes:
-    - Fixed machines emitting smoke while idle. Boilers, furnaces, and burner mining drills now only smoke while their status is actually "working" (burning fuel), instead of any time the entity was active. An idle or unfed boiler no longer puffs smoke.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.4
-Date: 2026-06-15
-  Bugfixes:
-    - Removed invalid smoke prototype keys (wind_speed_factor, vertical_speed_slowdown) that Factorio 2.0 silently ignored, so smoke now only uses supported fields.
-    - Removed a duplicate affected_by_wind assignment in the smoke builder.
-    - Fixed rocket and explosion smoke not appearing. Rocket launches now emit smoke through on_rocket_launched, and destructive entity deaths now emit blast smoke directly instead of relying on on_trigger_created_entity, which rarely fired for base entities.
-  Changes:
-    - Explosion and death smoke is near-player gated and scales with entity size to stay UPS-conscious.
-    - Enemy (unit) deaths emit smoke only occasionally so large battles do not flood the map with smoke.
-    - Added bonus trigger-created coverage for massive and nuke explosion entities.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.3
-Date: 2026-06-15
-  Features:
-    - Added Ultra Real smoothness mode for the smoothest high-FPS-style smoke look.
-    - Added Black smoke strength setting with Soft, Realistic, and Strong options.
-  Changes:
-    - Rebalanced smoke colours toward softer grey/soot instead of pure black.
-    - Reduced large dark blob formation with smaller scales, shorter duration, and lower opacity.
-    - Improved smoke drift feel with softer wind movement and slower animation cycling.
-    - Tuned vehicle and tank exhaust to look smoother and less chunky.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.2
-Date: 2026-06-15
-  Changes:
-    - Toned down overly dense black smoke for a more realistic look.
-    - Boilers now use a soot-style smoke profile instead of the older dense heavy-black profile.
-    - Reduced boiler smoke jitter and per-emission puff count so smoke no longer forms a giant dark wall as easily.
-    - Reduced Heavy and Cinematic density caps slightly to keep darker smoke readable around machines.
-    - Tanks now use soot-style exhaust to better match the rest of the mod.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.1
-Date: 2026-06-15
-  Features:
-    - Added a Smoke smoothness setting with Performance, Smooth, and 120 FPS Style options.
-    - Added smoother vehicle and locomotive exhaust trails.
-  Changes:
-    - Smoke emission can now run in smaller, more frequent visual pulses while keeping near-player caps.
-    - Smoke animation now cycles for the configured duration instead of ending early when the copied base animation finishes.
-    - Updated README and locale text for the new smoothness setting.
-
----------------------------------------------------------------------------------------------------
-Version: 1.0.0
-Date: 2026-06-15
-  Features:
-    - Initial release of Real Smoke.
-    - Adds grounded industrial smoke to boilers, stone furnaces, steel furnaces, burner mining drills, locomotives, cars, tanks, rockets, and explosions.
-    - Adds runtime settings for density, scan radius, machine smoke, vehicle smoke, event smoke, and debug stats.
-    - Uses lightweight trivial smoke prototypes with wind movement, expansion, and fade-out.
-    - Designed as a visual-only, UPS-conscious mod.
+  data:extend({
+    make_smoke(
+      "real-smoke-light",
+      {r = 0.40, g = 0.40, b = 0.37, a = 0.24},
+      0.22,
+      1.05,
+      180,
+      18,
+      70,
+      95,
+      0.985
+    ),
+    make_smoke(
+      "real-smoke-industrial",
+      {r = 0.31, g = 0.30, b = 0.275, a = 0.31},
+      0.30,
+      1.45,
+      250,
+      22,
+      105,
+      125,
+      0.988
+    ),
+    make_smoke(
+      "real-smoke-soot",
+      {r = 0.22, g = 0.215, b = 0.20, a = 0.28},
+      0.28,
+      1.35,
+      230,
+      20,
+      95,
+      115,
+      0.988
+    ),
+    make_smoke(
+      "real-smoke-heavy",
+      {r = 0.16, g = 0.15, b = 0.135, a = 0.34},
+      0.34,
+      1.70,
+      285,
+      24,
+      115,
+      135,
+      0.989
+    ),
+    make_smoke(
+      "real-smoke-exhaust",
+      {r = 0.25, g = 0.245, b = 0.23, a = 0.26},
+      0.22,
+      1.20,
+      210,
+      16,
+      85,
+      105,
+      0.987
+    ),
+    make_smoke(
+      "real-smoke-blast",
+      {r = 0.07, g = 0.065, b = 0.055, a = 0.62},
+      0.85,
+      3.20,
+      360,
+      12,
+      140,
+      210,
+      0.992
+    )
+  })
+end

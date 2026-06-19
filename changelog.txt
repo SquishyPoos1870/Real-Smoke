@@ -1,0 +1,98 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.19
+Date: 2026-06-20
+  Performance:
+    - Cached optional Real Rain and Real Wind integration reads per surface/tick so multiplayer or multi-player-area scans do not repeat the same remote calls unnecessarily.
+  Bugfixes:
+    - Added an extra surface-validity guard before spawning trivial smoke effects.
+  Changes:
+    - Refreshed documentation wording for the optional weather/wind integration.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.18
+Date: 2026-06-14
+  Features:
+    - Added optional Real Wind integration.
+    - Smoke now responds to Real Wind gust state as well as Real Rain storms.
+  Compatibility:
+    - Real Rain and Real Wind integrations are optional and safe to run separately.
+  License:
+    - Updated the package license to GNU GPLv3.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.17
+Date: 2026-06-15
+  Features:
+    - Added optional Real Rain integration while keeping Real Smoke as a separate standalone mod.
+    - When Real Rain is installed and raining, smoke now reacts to storm weather with stronger gust drift and slightly cleaner/thinner wet-weather smoke.
+    - Added a runtime setting to toggle Real Rain weather integration.
+  Compatibility:
+    - Added optional dependency support for Real Rain so load order is clean when both mods are installed.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.16
+Date: 2026-06-15
+  Changes:
+    - Version bump and refreshed mod description/documentation.
+    - No gameplay changes since 1.0.5. Still includes the idle-smoke fix (machines only smoke while actually working) and the rocket/explosion smoke fixes.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.5
+Date: 2026-06-15
+  Bugfixes:
+    - Fixed machines emitting smoke while idle. Boilers, furnaces, and burner mining drills now only smoke while their status is actually "working" (burning fuel), instead of any time the entity was active. An idle or unfed boiler no longer puffs smoke.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 2026-06-15
+  Bugfixes:
+    - Removed invalid smoke prototype keys (wind_speed_factor, vertical_speed_slowdown) that Factorio 2.0 silently ignored, so smoke now only uses supported fields.
+    - Removed a duplicate affected_by_wind assignment in the smoke builder.
+    - Fixed rocket and explosion smoke not appearing. Rocket launches now emit smoke through on_rocket_launched, and destructive entity deaths now emit blast smoke directly instead of relying on on_trigger_created_entity, which rarely fired for base entities.
+  Changes:
+    - Explosion and death smoke is near-player gated and scales with entity size to stay UPS-conscious.
+    - Enemy (unit) deaths emit smoke only occasionally so large battles do not flood the map with smoke.
+    - Added bonus trigger-created coverage for massive and nuke explosion entities.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 2026-06-15
+  Features:
+    - Added Ultra Real smoothness mode for the smoothest high-FPS-style smoke look.
+    - Added Black smoke strength setting with Soft, Realistic, and Strong options.
+  Changes:
+    - Rebalanced smoke colours toward softer grey/soot instead of pure black.
+    - Reduced large dark blob formation with smaller scales, shorter duration, and lower opacity.
+    - Improved smoke drift feel with softer wind movement and slower animation cycling.
+    - Tuned vehicle and tank exhaust to look smoother and less chunky.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 2026-06-15
+  Changes:
+    - Toned down overly dense black smoke for a more realistic look.
+    - Boilers now use a soot-style smoke profile instead of the older dense heavy-black profile.
+    - Reduced boiler smoke jitter and per-emission puff count so smoke no longer forms a giant dark wall as easily.
+    - Reduced Heavy and Cinematic density caps slightly to keep darker smoke readable around machines.
+    - Tanks now use soot-style exhaust to better match the rest of the mod.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2026-06-15
+  Features:
+    - Added a Smoke smoothness setting with Performance, Smooth, and 120 FPS Style options.
+    - Added smoother vehicle and locomotive exhaust trails.
+  Changes:
+    - Smoke emission can now run in smaller, more frequent visual pulses while keeping near-player caps.
+    - Smoke animation now cycles for the configured duration instead of ending early when the copied base animation finishes.
+    - Updated README and locale text for the new smoothness setting.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 2026-06-15
+  Features:
+    - Initial release of Real Smoke.
+    - Adds grounded industrial smoke to boilers, stone furnaces, steel furnaces, burner mining drills, locomotives, cars, tanks, rockets, and explosions.
+    - Adds runtime settings for density, scan radius, machine smoke, vehicle smoke, event smoke, and debug stats.
+    - Uses lightweight trivial smoke prototypes with wind movement, expansion, and fade-out.
+    - Designed as a visual-only, UPS-conscious mod.
