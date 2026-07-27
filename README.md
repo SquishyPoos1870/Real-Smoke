@@ -1,6 +1,6 @@
 # Real Smoke
 
-**Real Smoke** adds grounded, industrial smoke effects to Factorio 2.0.
+**Real Smoke** adds grounded, industrial smoke effects to Factorio 2.1.
 
 The mod is designed to make factories feel dirtier and more alive without turning the whole map into grey fog. Smoke rises, drifts, expands, and fades using lightweight trivial smoke effects.
 
@@ -28,7 +28,7 @@ The mod is designed to make factories feel dirtier and more alive without turnin
 - Adjustable scan radius
 - Visual-only; does not change recipes, entities, pollution, or balance
 
-## Recommended Setting
+## Recommended settings
 
 Use **Balanced** density with **Ultra Real** smoothness and **Realistic** black smoke strength for the best real-life look.
 
@@ -46,7 +46,7 @@ Shows simple runtime smoke stats.
 
 ## Compatibility
 
-Built for Factorio 2.0 and should work with Space Age saves because it only adds visual smoke effects to existing entities/events.
+Built for Factorio 2.1 and Space Age saves. It only adds visual smoke effects to existing entities/events, with guarded runtime hooks so a rejected smoke puff cannot crash the save.
 
 ## Author
 
@@ -55,7 +55,7 @@ Squishy1870
 
 ## Optional Weather/Wind Integration
 
-Real Smoke can read Real Rain and Real Wind when they are installed. Rain slightly thins heavy smoke, storms make smoke drift harder, and Real Wind gusts add more natural side movement and exhaust-trail variation. Each integration is optional and can be disabled in runtime settings.
+Real Smoke can read Real Rain and Real Wind when they are installed. Real Rain's drizzle-through-monsoon stages progressively thin and push smoke, while Real Wind speed and gusts add natural side movement and exhaust-trail variation. Each integration is optional and can be disabled in runtime settings.
 
 ## License
 
