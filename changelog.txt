@@ -1,4 +1,30 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.21
+Date: 2026-07-27
+  Bugfixes:
+    - Restored full current Real Rain integration by reading its stage interface and mapping drizzle through monsoon to progressively stronger smoke drift and washout.
+    - Kept Real Wind's live speed and gust data authoritative when Real Rain and Real Wind are enabled together.
+    - Prevented overlapping multiplayer scan areas from processing the same machine or vehicle more than once per smoke cycle.
+    - Fixed corrupted punctuation in the Mod Portal description.
+  Changes:
+    - Clarified runtime setting, performance, companion-mod, and preset descriptions.
+    - Added the current GitHub repository to the mod metadata.
+  Compatibility:
+    - Kept support for older Real Rain builds that expose the legacy get_weather remote call.
+
+---------------------------------------------------------------------------------------------------
+Version: 1.0.20
+Date: 2026-06-25
+  Compatibility:
+    - Updated Real Smoke for Factorio 2.1.
+    - Updated info.json factorio_version to 2.1 and base dependency to >= 2.1.0.
+  Stability:
+    - Added a guarded smoke-spawn path so missing or rejected trivial-smoke prototypes cannot crash a save.
+    - Added guarded event registration for safer forward compatibility across 2.1 experimental builds.
+  Documentation:
+    - Updated README and portal description text to reference Factorio 2.1 / Space Age compatibility.
+
+---------------------------------------------------------------------------------------------------
 Version: 1.0.19
 Date: 2026-06-20
   Performance:

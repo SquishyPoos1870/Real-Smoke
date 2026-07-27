@@ -98,6 +98,14 @@ local BLACK_STRENGTH = {
   }
 }
 
+local REAL_RAIN_STAGE_WEATHER = {
+  drizzle = {is_raining = true, storm_factor = 0.65, wind_speed = 0.015, wind_bucket = "straight"},
+  rain = {is_raining = true, storm_factor = 1.00, wind_speed = 0.030, wind_bucket = "straight"},
+  heavy = {is_raining = true, storm_factor = 1.50, wind_speed = 0.055, wind_bucket = "straight"},
+  storm = {is_raining = true, storm_factor = 2.20, wind_speed = 0.090, wind_bucket = "gust"},
+  monsoon = {is_raining = true, storm_factor = 3.00, wind_speed = 0.120, wind_bucket = "gust"}
+}
+
 local MACHINE_PROFILE = {
   ["boiler"] = {
     smoke = "soot",
@@ -240,7 +248,12 @@ local function real_rain_weather(surface)
   if iface["is_raining"] then
     local ok, raining = pcall(remote.call, "real-rain", "is_raining", surface.index)
     if ok and raining then
-      return { is_raining = true, storm_factor = 1, wind_bucket = "straight" }
+      local stage = "rain"
+      if iface["stage"] then
+        local stage_ok, current_stage = pcall(remote.call, "real-rain", "stage", surface.index)
+        if stage_ok and type(current_stage) == "string" then stage = current_stage end
+      end
+      return REAL_RAIN_STAGE_WEATHER[stage] or REAL_RAIN_STAGE_WEATHER.rain
     end
   end
 
@@ -304,8 +317,10 @@ local function weather_adjusted_config(cfg, surface, tick)
   local adjusted = copy_config(cfg)
   local is_raining = weather and weather.is_raining
   local storm = clamp(tonumber(weather and weather.storm_factor) or tonumber(wind and wind.storm_factor) or 1, 0.5, 3.0)
-  local wind_bucket = (weather and weather.wind_bucket) or (wind and wind.wind_bucket) or "straight"
-  local raw_wind_speed = tonumber(weather and weather.wind_speed) or tonumber(wind and wind.speed) or 0
+  -- Real Wind is the authoritative wind source when both companion mods are active.
+  -- Real Rain's stage-derived values remain a useful standalone fallback.
+  local wind_bucket = (wind and wind.wind_bucket) or (weather and weather.wind_bucket) or "straight"
+  local raw_wind_speed = tonumber(wind and wind.speed) or tonumber(weather and weather.wind_speed) or 0
   local wind_bonus = clamp(raw_wind_speed / 0.075, 0, 1.65)
   local gust_bonus = wind_bucket == "gust" and 0.65 or 0
 
@@ -353,11 +368,18 @@ local function spawn_smoke(surface, smoke_name, position, jitter, count)
   for _ = 1, count or 1 do
     local x = position.x + rand_range(jitter or 0)
     local y = position.y + rand_range(jitter or 0)
-    surface.create_trivial_smoke({
+
+    -- 2.1-safe guard: a missing/renamed smoke prototype or invalid surface state
+    -- should never hard-crash a save. If Factorio rejects the smoke spawn,
+    -- skip that puff and keep the visual-only mod running.
+    local ok = pcall(surface.create_trivial_smoke, {
       name = smoke_name,
       position = {x = x, y = y}
     })
-    spawned = spawned + 1
+
+    if ok then
+      spawned = spawned + 1
+    end
   end
   return spawned
 end
@@ -436,7 +458,21 @@ local function spawn_vehicle_smoke(entity, profile, cfg)
   return spawned
 end
 
-local function scan_player_area(player, cfg, tick)
+local function entity_visit_key(entity)
+  local unit_number = entity.unit_number
+  if unit_number then return unit_number end
+  local position = entity.position
+  return entity.name .. "@" .. position.x .. "," .. position.y
+end
+
+local function is_first_visit(seen_entities, entity)
+  local key = entity_visit_key(entity)
+  if seen_entities[key] then return false end
+  seen_entities[key] = true
+  return true
+end
+
+local function scan_player_area(player, cfg, tick, seen_entities)
   if not (player and player.valid and player.connected and player.character) then return 0 end
 
   local surface = player.surface
@@ -453,7 +489,7 @@ local function scan_player_area(player, cfg, tick)
       if spawned >= cfg.max_per_player then break end
       local profile = MACHINE_PROFILE[entity.name]
 
-      if profile and entity_is_working(entity) and math.random() <= cfg.machine_chance then
+      if profile and is_first_visit(seen_entities, entity) and entity_is_working(entity) and math.random() <= cfg.machine_chance then
         local emit_pos = {
           x = entity.position.x + (profile.offset.x or 0),
           y = entity.position.y + (profile.offset.y or 0)
@@ -473,7 +509,7 @@ local function scan_player_area(player, cfg, tick)
       if spawned >= cfg.max_per_player then break end
       local profile = VEHICLE_PROFILE[entity.name]
 
-      if profile and vehicle_is_moving(entity, profile) and math.random() <= cfg.vehicle_chance then
+      if profile and is_first_visit(seen_entities, entity) and vehicle_is_moving(entity, profile) and math.random() <= cfg.vehicle_chance then
         spawned = spawned + spawn_vehicle_smoke(entity, profile, cfg)
       end
     end
@@ -491,8 +527,9 @@ local function run_real_smoke(event)
   ensure_storage()
 
   local spawned_this_cycle = 0
+  local seen_entities = {}
   for _, player in pairs(game.connected_players) do
-    spawned_this_cycle = spawned_this_cycle + scan_player_area(player, cfg, event.tick)
+    spawned_this_cycle = spawned_this_cycle + scan_player_area(player, cfg, event.tick, seen_entities)
   end
 
   storage.real_smoke.spawned = storage.real_smoke.spawned + spawned_this_cycle
@@ -595,6 +632,12 @@ local function on_entity_died(event)
   storage.real_smoke.spawned = storage.real_smoke.spawned + spawned
 end
 
+local function safe_on_event(event_id, handler)
+  if event_id then
+    script.on_event(event_id, handler)
+  end
+end
+
 script.on_init(function()
   ensure_storage()
 end)
@@ -604,9 +647,9 @@ script.on_configuration_changed(function()
 end)
 
 script.on_nth_tick(5, run_real_smoke)
-script.on_event(defines.events.on_trigger_created_entity, on_trigger_created_entity)
-script.on_event(defines.events.on_rocket_launched, on_rocket_launched)
-script.on_event(defines.events.on_entity_died, on_entity_died)
+safe_on_event(defines.events.on_trigger_created_entity, on_trigger_created_entity)
+safe_on_event(defines.events.on_rocket_launched, on_rocket_launched)
+safe_on_event(defines.events.on_entity_died, on_entity_died)
 
 commands.add_command("real-smoke", {"real-smoke.command-help"}, function(command)
   ensure_storage()

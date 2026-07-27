@@ -1,13 +1,14 @@
 {
   "name": "real-smoke",
-  "version": "1.0.19",
+  "version": "1.0.21",
   "title": "Real Smoke",
   "author": "Squishy1870",
-  "factorio_version": "2.0",
+  "factorio_version": "2.1",
   "dependencies": [
-    "base >= 2.0.0",
+    "base >= 2.1.0",
     "? real-rain",
     "? real-wind"
   ],
-  "description": "Adds grounded industrial smoke effects to machines, vehicles, rockets, and explosions. Visual-only and UPS-conscious with optional Real Rain and Real Wind integration so storms and gusts make smoke drift more naturally while each mod still works stand-alone."
+  "description": "Grounded industrial smoke for working machines, moving vehicles, rocket launches, and explosions. Visual-only and UPS-conscious, with optional Real Rain stage and Real Wind gust integration.",
+  "homepage": "https://github.com/SquishyPoos1870/Real-Smoke"
 }

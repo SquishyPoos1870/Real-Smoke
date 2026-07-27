@@ -1,99 +1,61 @@
 # Real Smoke
 
-**Grounded, industrial smoke for Factorio 2.0.** Real Smoke makes your factory feel dirtier and more alive — boilers churn, furnaces breathe, vehicles trail exhaust, and rockets and explosions kick up real smoke — without burying the map in grey fog. Smoke rises, drifts, expands, and fades using lightweight trivial-smoke effects, and it is **purely visual**: no recipes, entities, pollution, or balance are touched.
+Grounded industrial smoke for Factorio 2.1. Real Smoke makes factories feel dirtier and more alive without burying the map in grey fog. Boilers churn, furnaces breathe, vehicles trail exhaust, and rockets and explosions throw up short smoke clouds.
 
-Everything is tunable at runtime, and the whole system is built to stay UPS-friendly by only working near connected players.
+The mod is visual only: it does not change recipes, pollution, machine performance, or game balance.
 
----
+## Features
 
-## What it does
+- Working boilers, stone furnaces, steel furnaces, and burner mining drills emit smoke.
+- Idle, unfed, and paused machines stay clean.
+- Moving locomotives, cars, and tanks produce exhaust trails.
+- Rocket launches and destructive entity deaths create short blast-smoke bursts.
+- Subtle, Balanced, Heavy, and Cinematic density presets.
+- Performance, Smooth, 120 FPS Style, and Ultra Real cadence presets.
+- Soft, Realistic, and Strong soot colour presets.
+- Adjustable near-player scan radius and independent effect toggles.
 
-- **Machine smoke** — boilers, stone furnaces, steel furnaces, and burner mining drills emit smoke **only while they are actually working** (burning fuel). An idle, unfed, or paused machine stays clean.
-- **Vehicle exhaust** — locomotives, cars, and tanks trail exhaust smoke while moving, with optional smoother multi-puff trails.
-- **Rocket & explosion smoke** — rocket launches throw up a smoke burst, and destructive entity deaths (worms, spawners, turrets, buildings, large enemies) kick up blast smoke scaled to the size of what blew up.
-- **Soot-style colouring** — smoke leans toward soft grey/soot instead of pure black, so it reads as industrial grime rather than a giant dark wall.
+## Recommended settings
 
----
+For a natural look:
 
-## Settings (all runtime, change them anytime)
+- Density: Balanced
+- Smoothness: Ultra Real
+- Black smoke strength: Realistic
 
-- **Enable Real Smoke** — master switch for every effect.
-- **Smoke density** — how much smoke appears near each player:
-  - *Subtle* — very light; best for huge factories or weak servers.
-  - *Balanced* — recommended default. Visible but not messy.
-  - *Heavy* — thicker smoke for a stronger industrial feel.
-  - *Cinematic* — maximum smoke for screenshots and high-end PCs.
-- **Smoke smoothness** — how often smaller puffs are emitted:
-  - *Performance* — lowest runtime cost, smoke emits less often.
-  - *Smooth* — recommended; a natural cadence without being heavy.
-  - *120 FPS Style* — smaller, more frequent puffs and softer trails (uses more UPS).
-  - *Ultra Real* — smoothest preset, lighter layered smoke with tighter jitter.
-- **Black smoke strength** — how dark soot smoke appears: *Soft / Realistic / Strong*.
-- **Smoke scan radius** — how far around each player Real Smoke looks for active machines and vehicles (32–192, default 96). Lower is better for UPS.
-- **Machine smoke / Vehicle smoke / Rocket and explosion smoke** — toggle each effect family independently.
-- **Debug smoke stats** — prints periodic spawn counts for testing.
+Use Subtle density with Performance smoothness for very large factories or busy multiplayer servers. Use Cinematic density for screenshots and a heavier industrial atmosphere.
 
-> **Note on the smoothness presets:** *120 FPS Style* and *Ultra Real* are **visual** smoothness presets. Factorio still simulates at its normal tick rate, so these change how fluid the smoke *looks*, not how often the game logic runs.
+The 120 FPS Style and Ultra Real options are visual cadence presets. Factorio still runs at its normal simulation rate.
 
----
+## Optional weather integration
 
-## Recommended setup
+Real Smoke works on its own. When Real Rain is installed, drizzle through monsoon stages progressively alter smoke density and drift. When Real Wind is installed, current wind speed and gusts add sideways movement and exhaust-trail variation.
 
-For the most true-to-life look:
-
-- **Density:** Balanced
-- **Smoothness:** Ultra Real
-- **Black smoke strength:** Realistic
-
-Other combinations:
-
-- Want more fluid smoke? Use **120 FPS Style** smoothness.
-- Taking screenshots or want a heavier industrial mood? Use **Cinematic** density.
-- On a massive factory or a busy multiplayer server? Use **Subtle** density with **Performance** smoothness.
-- Dark smoke still feels too heavy? Drop **Black smoke strength** to **Soft**.
-
----
+Both integrations can be disabled independently in runtime settings.
 
 ## Performance
 
-Real Smoke is built to be UPS-conscious:
+- Machine and vehicle scans only run near connected players.
+- Emitters inside overlapping multiplayer scan areas are processed once per cycle.
+- Explosion smoke is distance-gated, and small enemy deaths are sampled to prevent battle spam.
+- Weather data is cached once per surface and tick.
 
-- It only scans for active machines and vehicles **near connected players**, within your configured scan radius.
-- Explosion/death smoke is also near-player gated, and enemy (unit) deaths only smoke occasionally, so a big biter wave will not flood the map with smoke.
-- Lower the **scan radius** and use **Performance** smoothness + **Subtle** density if you need to claw back UPS on a large save.
-- Optional Real Rain / Real Wind data is cached per surface/tick before smoke is adjusted, so weather integration stays lightweight on busy saves.
-
----
+Lower the scan radius or choose lighter presets if a very large save needs more UPS headroom.
 
 ## Command
 
-```
+```text
 /real-smoke
 ```
 
-Prints simple runtime smoke stats (cycles run and total puffs spawned).
-
----
+Displays the number of completed smoke cycles and successfully spawned puffs.
 
 ## Compatibility
 
-Built for **Factorio 2.0** and should work with **Space Age** saves — it only adds visual smoke to existing entities and events, and changes nothing about game balance, recipes, or pollution. Safe to add to or remove from an existing save.
+Built for Factorio 2.1 and Space Age saves. Runtime smoke creation and optional integrations are guarded so unavailable prototypes or companion interfaces do not crash the save.
 
----
+Safe to add to or remove from an existing save.
 
-## Author
+## Licence
 
-**Squishy1870**
-
-Found a bug or have a tuning suggestion? Feedback is welcome — especially around how often explosion/death smoke fires, which is the main thing worth eyeballing in your own game.
-
-
-## Optional Real Rain / Real Wind integration
-
-Real Smoke stays fully standalone, but when **Real Rain** or **Real Wind** are installed it can read their active weather state. Rain and storms slightly thin the darkest smoke, while stronger wind and gusts add more side movement and exhaust-trail variation. Disable the integration settings at runtime if you want Real Smoke to ignore weather or wind.
-
----
-
-## License
-
-GNU General Public License v3.0. See the included `LICENSE` file for the full license text.
+GNU General Public License v3.0. See the included `LICENSE` file.
